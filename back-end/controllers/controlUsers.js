@@ -5,55 +5,54 @@ const { NODE_ENV, JWT_SECRET } = process.env;
 
 const User = require('../models/userModel');
 const {
-  NOT_FOUND,
-  INVALID_DATA,
-  DEFAULT_ERROR,
   CREATE,
   USER_NOT_FOUND_MESSAGE,
   INVALID_DATA_MESSAGE,
-  DEFAULT_ERROR_MESSAGE,
 } = require('../lib/consts');
+const NotFound = require('../errors/NotFound');
+const ValidationError = require('../errors/Validation');
+const Unauthorize = require('../errors/Unauthrorized');
 
-const getUsers = (req, res) => {
+const getUsers = (req, res, next) => {
   User.find({})
     .then((users) => res.send(users))
-    .catch((err) => res.status(DEFAULT_ERROR).send(err));
+    .catch(next);
 };
 
-const getUserById = (req, res) => {
+const getUserById = (req, res, next) => {
   const { _id } = req.params;
   User.findById(_id)
     .orFail()
     .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'DocumentNotFoundError') {
-        res.status(NOT_FOUND).send({ Error: USER_NOT_FOUND_MESSAGE });
+        throw new NotFound(USER_NOT_FOUND_MESSAGE);
       } else if (err.name === 'CastError') {
-        res.status(INVALID_DATA).send({ Error: INVALID_DATA_MESSAGE });
-      } else {
-        res.status(DEFAULT_ERROR).send({ Error: DEFAULT_ERROR_MESSAGE });
+        throw new ValidationError(INVALID_DATA_MESSAGE);
       }
-    });
-};
-
-const createUser = (req, res) => {
-  bcrypt.hash(req.body.password, 10).then((hash) =>
-    User.create({
-      ...req.body,
-      password: hash,
     })
-      .then((user) => res.status(CREATE).send(user))
-      .catch((err) => {
-        if (err.name === 'ValidationError') {
-          res.status(INVALID_DATA).send({ Error: err.message });
-        } else {
-          res.status(DEFAULT_ERROR).send({ Error: DEFAULT_ERROR_MESSAGE });
-        }
-      })
-  );
+    .catch(next);
 };
 
-const updateUser = (req, res) => {
+const createUser = (req, res, next) => {
+  bcrypt
+    .hash(req.body.password, 10)
+    .then((hash) =>
+      User.create({
+        ...req.body,
+        password: hash,
+      })
+        .then((user) => res.status(CREATE).send(user))
+        .catch((err) => {
+          if (err.name === 'ValidationError') {
+            throw new ValidationError(INVALID_DATA_MESSAGE);
+          }
+        })
+    )
+    .catch(next);
+};
+
+const updateUser = (req, res, next) => {
   const { _id } = req.user;
   User.findByIdAndUpdate(
     _id,
@@ -64,18 +63,17 @@ const updateUser = (req, res) => {
     .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'DocumentNotFoundError') {
-        res.status(NOT_FOUND).send({ Error: USER_NOT_FOUND_MESSAGE });
+        throw new NotFound(USER_NOT_FOUND_MESSAGE);
       } else if (err.name === 'CastError') {
-        res.status(INVALID_DATA).send({ Error: INVALID_DATA_MESSAGE });
+        throw new ValidationError(INVALID_DATA_MESSAGE);
       } else if (err.name === 'ValidationError') {
-        res.status(INVALID_DATA).send({ Error: err.message });
-      } else {
-        res.status(DEFAULT_ERROR).send({ Error: DEFAULT_ERROR_MESSAGE });
+        throw new ValidationError(err.message);
       }
-    });
+    })
+    .catch(next);
 };
 
-const updateAvatar = (req, res) => {
+const updateAvatar = (req, res, next) => {
   const { _id } = req.user;
   User.findByIdAndUpdate(
     _id,
@@ -86,18 +84,17 @@ const updateAvatar = (req, res) => {
     .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'DocumentNotFoundError') {
-        res.status(NOT_FOUND).send({ Error: USER_NOT_FOUND_MESSAGE });
+        throw new NotFound(USER_NOT_FOUND_MESSAGE);
       } else if (err.name === 'CastError') {
-        res.status(INVALID_DATA).send({ Error: INVALID_DATA_MESSAGE });
+        throw new ValidationError(INVALID_DATA_MESSAGE);
       } else if (err.name === 'ValidationError') {
-        res.status(INVALID_DATA).send({ Error: err.message });
-      } else {
-        res.status(DEFAULT_ERROR).send({ Error: DEFAULT_ERROR_MESSAGE });
+        throw new ValidationError(err.message);
       }
-    });
+    })
+    .catch(next);
 };
 
-const login = (req, res) => {
+const login = (req, res, next) => {
   const { password, email } = req.body;
   User.findUserByCredentials(email, password)
     .then((user) => {
@@ -108,24 +105,24 @@ const login = (req, res) => {
       res.send({ token });
     })
     .catch((err) => {
-      res.status(401).send({ message: err.message });
-    });
+      throw new Unauthorize(err.message);
+    })
+    .catch(next);
 };
 
-const getCurrentUser = (req, res) => {
+const getCurrentUser = (req, res, next) => {
   const { _id } = req.user;
   User.findById(_id)
     .orFail()
     .then((user) => res.send({ user }))
     .catch((err) => {
       if (err.name === 'DocumentNotFoundError') {
-        res.status(NOT_FOUND).send({ Error: USER_NOT_FOUND_MESSAGE });
+        throw new NotFound(USER_NOT_FOUND_MESSAGE);
       } else if (err.name === 'CastError') {
-        res.status(INVALID_DATA).send({ Error: INVALID_DATA_MESSAGE });
-      } else {
-        res.status(DEFAULT_ERROR).send({ Error: DEFAULT_ERROR_MESSAGE });
+        throw new ValidationError(INVALID_DATA_MESSAGE);
       }
-    });
+    })
+    .catch(next);
 };
 
 module.exports = {
