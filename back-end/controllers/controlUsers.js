@@ -1,5 +1,8 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+
+const { NODE_ENV, JWT_SECRET } = process.env;
+
 const User = require('../models/userModel');
 const {
   NOT_FOUND,
@@ -108,11 +111,32 @@ const login = (req, res) => {
   const { password, email } = req.body;
   User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign({ _id: user._id }, 'some-secret-key');
+      const token = jwt.sign(
+        { _id: user._id },
+        NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret'
+      );
       res.send({ token });
     })
     .catch((err) => {
       res.status(401).send({ message: err.message });
+    });
+};
+
+const getCurrentUser = (req, res) => {
+  const { _id } = req.user;
+  User.findById(_id)
+    .orFail()
+    .then((user) =>
+      res.send({ name: user.name, about: user.about, avatar: user.avatar })
+    )
+    .catch((err) => {
+      if (err.name === 'DocumentNotFoundError') {
+        res.status(NOT_FOUND).send({ Error: USER_NOT_FOUND_MESSAGE });
+      } else if (err.name === 'CastError') {
+        res.status(INVALID_DATA).send({ Error: INVALID_DATA_MESSAGE });
+      } else {
+        res.status(DEFAULT_ERROR).send({ Error: DEFAULT_ERROR_MESSAGE });
+      }
     });
 };
 
@@ -123,4 +147,5 @@ module.exports = {
   updateUser,
   updateAvatar,
   login,
+  getCurrentUser,
 };
