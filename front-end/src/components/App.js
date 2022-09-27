@@ -28,7 +28,6 @@ import auth from "../utils/auth";
 function App() {
     const location = useLocation();
     const history = useHistory();
-
     const [isLoggedIn, setLoggedIn] = useState(false);
     const [cards, setCards] = useState([]);
     const [cardToRemove, setCardToRemove] = useState({});

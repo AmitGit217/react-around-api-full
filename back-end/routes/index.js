@@ -5,7 +5,7 @@ const auth = require('../middlewares/auth');
 const {
   getUsers,
   getUserById,
-  postUser,
+  createUser,
   updateUser,
   updateAvatar,
   login,
@@ -31,7 +31,7 @@ router.post(
       password: Joi.string().required(),
     }),
   }),
-  postUser
+  createUser
 );
 
 router.get('/users', auth, getUsers);
@@ -41,7 +41,20 @@ router.patch('/users/me/avatar', auth, updateAvatar);
 router.get('/users/:_id', getUserById);
 
 router.get('/cards', auth, getCards);
-router.post('/cards', auth, postCard);
+router.post(
+  '/cards',
+  auth,
+  celebrate({
+    body: Joi.object().keys({
+      name: Joi.string().min(2).max(30).required(),
+      link: Joi.string().uri().required(),
+      owner: Joi.object(),
+      likes: Joi.array(),
+      createdAt: Joi.date(),
+    }),
+  }),
+  postCard
+);
 router.delete('/cards/:_id', auth, deleteCardById);
 router.put('/cards/:_id/likes', auth, likeCard);
 router.delete('/cards/:_id/likes', auth, disLikeCard);

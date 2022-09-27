@@ -36,23 +36,13 @@ const getUserById = (req, res) => {
     });
 };
 
-const postUser = (req, res) => {
+const createUser = (req, res) => {
   bcrypt.hash(req.body.password, 10).then((hash) =>
     User.create({
-      email: req.body.email,
-      name: req.body.name,
-      about: req.body.about,
-      avatar: req.body.avatar,
+      ...req.body,
       password: hash,
     })
-      .then((user) =>
-        res.status(CREATE).send({
-          name: user.name,
-          about: user.about,
-          avatar: user.avatar,
-          email: user.email,
-        })
-      )
+      .then((user) => res.status(CREATE).send(user))
       .catch((err) => {
         if (err.name === 'ValidationError') {
           res.status(INVALID_DATA).send({ Error: err.message });
@@ -126,9 +116,7 @@ const getCurrentUser = (req, res) => {
   const { _id } = req.user;
   User.findById(_id)
     .orFail()
-    .then((user) =>
-      res.send({ name: user.name, about: user.about, avatar: user.avatar })
-    )
+    .then((user) => res.send({ user }))
     .catch((err) => {
       if (err.name === 'DocumentNotFoundError') {
         res.status(NOT_FOUND).send({ Error: USER_NOT_FOUND_MESSAGE });
@@ -143,7 +131,7 @@ const getCurrentUser = (req, res) => {
 module.exports = {
   getUsers,
   getUserById,
-  postUser,
+  createUser,
   updateUser,
   updateAvatar,
   login,

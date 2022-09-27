@@ -19,12 +19,6 @@ const app = express();
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-// app.use((req, res, next) => {
-//   req.user = {
-//     _id: '630ef8d10a8fc9e2a454474e',
-//   };
-//   next();
-// });
 
 app.use(helmet());
 app.use(limiter);
