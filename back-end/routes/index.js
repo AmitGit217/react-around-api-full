@@ -34,7 +34,7 @@ router.post(
   postUser
 );
 
-router.get('/users', getUsers);
+router.get('/users', auth, getUsers);
 router.patch('/users/me', auth, updateUser);
 router.get('/users/me', auth, getCurrentUser);
 router.patch('/users/me/avatar', auth, updateAvatar);
