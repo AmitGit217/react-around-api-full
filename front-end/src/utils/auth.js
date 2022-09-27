@@ -43,7 +43,7 @@ class Auth {
 }
 
 const auth = new Auth({
-    url: "https://register.nomoreparties.co",
+    url: "https://api.amitgit217.students.nomoredomainssbs.ru",
     headers: { "Content-Type": "application/json" },
 });
 

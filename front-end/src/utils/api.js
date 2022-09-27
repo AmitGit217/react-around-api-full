@@ -70,7 +70,7 @@ class Api {
   }
 }
 const api = new Api({
-  baseUrl: "https://around.nomoreparties.co/v1/cohort-3-en",
+  baseUrl: "https://api.amitgit217.students.nomoredomainssbs.ru",
   headers: {
     authorization: "4f091419-1c89-4f29-928b-74f786fd1208",
     "Content-Type": "application/json",
