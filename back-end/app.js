@@ -19,12 +19,14 @@ const nonExistRoute = require('./routes/nonExistRoute');
 const errorHandler = require('./helpers/errorHandler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
+const allowedApi = 'http://localhost:3000/';
+
 const app = express();
 app.use(requestLogger);
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors(allowedApi));
 app.options('*', cors());
 
 app.use(helmet());
