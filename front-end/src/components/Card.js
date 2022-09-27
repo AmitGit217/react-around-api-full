@@ -6,7 +6,6 @@ export default function Card({
     likeCounter,
     onCardClick,
     onDeleteClick,
-
     name,
     onLike,
 }) {

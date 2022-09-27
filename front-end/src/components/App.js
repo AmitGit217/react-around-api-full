@@ -48,7 +48,6 @@ function App() {
     const [registerImage, setImage] = useState("");
     const [registerText, setText] = useState("");
     const [isLoading, setLoading] = useState(false);
-
     const inApp = location.pathname === "/";
     const inRegister = location.pathname === "/signup";
     const inLogin = location.pathname === "/signin";
