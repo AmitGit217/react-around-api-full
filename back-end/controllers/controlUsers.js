@@ -11,7 +11,7 @@ const {
 } = require('../lib/consts');
 const NotFound = require('../errors/NotFound');
 const ValidationError = require('../errors/Validation');
-const Unauthorize = require('../errors/Unauthrorized');
+const Unauthorize = require('../errors/Unauthorize');
 
 const getUsers = (req, res, next) => {
   User.find({})
