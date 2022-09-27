@@ -22,7 +22,7 @@ export default function Card({
     function handleLike() {
         onLike(card);
     }
-    const isOwn = card.owner._id === currentUser._id;
+    const isOwn = card.owner === currentUser._id;
 
     const showRemoveButton = isOwn ? true : `card__removeButton_hidden`;
     const isLiked = card.likes.some((user) => user._id === currentUser._id);

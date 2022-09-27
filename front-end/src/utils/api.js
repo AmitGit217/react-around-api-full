@@ -73,6 +73,7 @@ const api = new Api({
     baseUrl: "https://api.amitgit217.students.nomoredomainssbs.ru",
     headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
 });
 

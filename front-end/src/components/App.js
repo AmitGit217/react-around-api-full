@@ -142,6 +142,7 @@ function App() {
     function handleRegister(email, password) {
         auth.registerUser(email, password)
             .then((res) => {
+                res.send(res);
                 if (res.data) {
                     setImage(success);
                     setRegisterPopup(true);
@@ -191,22 +192,15 @@ function App() {
     }, []);
 
     useEffect(() => {
-        api.getUserInfo()
-            .then((res) => {
-                setCurrentUser(res);
-            })
-            .catch((err) => console.log(err));
-    }, []);
-
-    useEffect(() => {
         const token = localStorage.getItem("token");
         if (token) {
             const token = localStorage.getItem("token");
             auth.checkToken(token)
                 .then((res) => {
                     if (res) {
-                        setEmail(res.data.email);
+                        setEmail(res.user.email);
                         setLoggedIn(true);
+                        setCurrentUser(res.user);
                         history.push("/");
                     }
                 })
