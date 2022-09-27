@@ -14,7 +14,8 @@ const DEFAULT_ERROR_MESSAGE = 'Something went wrong with the server';
 const UNAUTHORIZE_MESSAGE = 'Authorization Required';
 
 // Connections
-const MONGO_DB = 'mongodb://localhost:27017/aroundb';
+const MONGO_DB =
+  'mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.6.0';
 
 module.exports = {
   NOT_FOUND,
