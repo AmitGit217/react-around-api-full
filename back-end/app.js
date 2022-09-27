@@ -19,13 +19,13 @@ const nonExistRoute = require('./routes/nonExistRoute');
 const errorHandler = require('./helpers/errorHandler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-const corsOptions = {
-  'Access-Control-Allow-Origin': '*',
-  credentials: true,
-};
-
 const app = express();
-app.use(cors(corsOptions));
+app.use(
+  cors({
+    origin: ['http://localhost:3000'],
+    credentials: true,
+  })
+);
 app.options('*', cors());
 app.use(requestLogger);
 app.use(express.json());
