@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt');
 const User = require('../models/userModel');
 const {
   NOT_FOUND,
@@ -32,15 +33,26 @@ const getUserById = (req, res) => {
 };
 
 const postUser = (req, res) => {
-  User.create(req.body)
-    .then((user) => res.status(CREATE).send(user))
-    .catch((err) => {
-      if (err.name === 'ValidationError') {
-        res.status(INVALID_DATA).send({ Error: err.message });
-      } else {
-        res.status(DEFAULT_ERROR).send({ Error: DEFAULT_ERROR_MESSAGE });
-      }
-    });
+  bcrypt.hash(req.body.password, 10).then((hash) =>
+    User.create({ email: req.body.email, password: hash })
+      .then((user) =>
+        res
+          .status(CREATE)
+          .send({
+            name: user.name,
+            about: user.about,
+            avatar: user.avatar,
+            email: user.email,
+          })
+      )
+      .catch((err) => {
+        if (err.name === 'ValidationError') {
+          res.status(INVALID_DATA).send({ Error: err.message });
+        } else {
+          res.status(DEFAULT_ERROR).send({ Error: DEFAULT_ERROR_MESSAGE });
+        }
+      })
+  );
 };
 
 const updateUser = (req, res) => {
