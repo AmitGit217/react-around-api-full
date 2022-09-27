@@ -6,6 +6,7 @@ const {
   postUser,
   updateUser,
   updateAvatar,
+  login,
 } = require('../controllers/controlUsers');
 const {
   getCards,
@@ -29,6 +30,9 @@ router.post(
   }),
   postUser
 );
+
+router.post('/login', login);
+
 router.patch('/users/me', updateUser);
 router.patch('/users/me/avatar', updateAvatar);
 router.get('/users/:_id', getUserById);

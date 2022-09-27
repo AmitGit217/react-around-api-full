@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
 const {
   NOT_FOUND,
@@ -34,16 +35,20 @@ const getUserById = (req, res) => {
 
 const postUser = (req, res) => {
   bcrypt.hash(req.body.password, 10).then((hash) =>
-    User.create({ email: req.body.email, password: hash })
+    User.create({
+      email: req.body.email,
+      name: req.body.name,
+      about: req.body.about,
+      avatar: req.body.avatar,
+      password: hash,
+    })
       .then((user) =>
-        res
-          .status(CREATE)
-          .send({
-            name: user.name,
-            about: user.about,
-            avatar: user.avatar,
-            email: user.email,
-          })
+        res.status(CREATE).send({
+          name: user.name,
+          about: user.about,
+          avatar: user.avatar,
+          email: user.email,
+        })
       )
       .catch((err) => {
         if (err.name === 'ValidationError') {
@@ -99,10 +104,23 @@ const updateAvatar = (req, res) => {
     });
 };
 
+const login = (req, res) => {
+  const { password, email } = req.body;
+  User.findUserByCredentials(email, password)
+    .then((user) => {
+      const token = jwt.sign({ _id: user._id }, 'some-secret-key');
+      res.send({ token });
+    })
+    .catch((err) => {
+      res.status(401).send({ message: err.message });
+    });
+};
+
 module.exports = {
   getUsers,
   getUserById,
   postUser,
   updateUser,
   updateAvatar,
+  login,
 };
