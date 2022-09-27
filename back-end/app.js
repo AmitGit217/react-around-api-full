@@ -19,7 +19,7 @@ const nonExistRoute = require('./routes/nonExistRoute');
 const errorHandler = require('./helpers/errorHandler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-const allowedApi = 'http://localhost:3000/';
+const allowedApi = 'http://localhost:3000';
 
 const app = express();
 app.use(requestLogger);
