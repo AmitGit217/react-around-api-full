@@ -102,7 +102,7 @@ const login = (req, res, next) => {
         { _id: user._id },
         NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret'
       );
-      res.send({ token });
+      res.send({ token, user });
     })
     .catch((err) => {
       throw new Unauthorize(err.message);

@@ -141,8 +141,7 @@ function App() {
     function handleRegister(email, password) {
         auth.registerUser(email, password)
             .then((res) => {
-                res.send(res);
-                if (res.data) {
+                if (res) {
                     setImage(success);
                     setRegisterPopup(true);
                     setText("Success! You have now been registered.");
@@ -159,6 +158,7 @@ function App() {
     function handleLogin(email, password) {
         auth.loginUser(email, password)
             .then((res) => {
+                console.log(res);
                 if (res.token) {
                     localStorage.setItem("token", res.token);
                     setEmail(email.email);
