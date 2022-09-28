@@ -7,21 +7,18 @@ const validUrl =
 
 const User = new mongoose.Schema({
   name: {
-    required: true,
     minlength: 2,
     maxlength: 30,
     type: String,
     default: 'Jacques Cousteau',
   },
   about: {
-    required: true,
     minlength: 2,
     maxlength: 30,
     type: String,
     default: 'Explorer',
   },
   avatar: {
-    required: true,
     type: String,
     validate: {
       validator: (value) => validUrl.test(value),
