@@ -97,7 +97,7 @@ function App() {
     }
 
     function handleCardLike(card) {
-        const isLiked = card.likes.some((user) => user._id === currentUser._id);
+        const isLiked = card.likes.some((id) => id === currentUser._id);
         api.changeLikeCardStatus(card._id, !isLiked)
             .then((newCard) => {
                 setCards((state) =>
@@ -158,12 +158,12 @@ function App() {
     function handleLogin(email, password) {
         auth.loginUser(email, password)
             .then((res) => {
-                console.log(res);
                 if (res.token) {
                     localStorage.setItem("token", res.token);
                     setEmail(email.email);
                     setLoggedIn(true);
                     history.push("/");
+                    setCurrentUser(res.user);
                 } else {
                     setImage(failRegister);
                     setRegisterPopup(true);
@@ -172,11 +172,11 @@ function App() {
             })
             .catch((err) => console.log(err));
     }
-
     function handleRedirect() {
         if (inApp) {
             localStorage.removeItem("token");
             setEmail("");
+            setCurrentUser({});
             history.push("/signin");
             setLoggedIn(false);
         }

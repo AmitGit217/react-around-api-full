@@ -20,12 +20,12 @@ class Api {
     }
     changeLikeCardStatus(id, likeState) {
         if (!likeState) {
-            return this._customFetch(`${this.baseUrl}/cards/likes/${id}`, {
+            return this._customFetch(`${this.baseUrl}/cards/${id}/likes`, {
                 headers: this.headers,
                 method: "DELETE",
             });
         } else {
-            return this._customFetch(`${this.baseUrl}/cards/likes/${id}`, {
+            return this._customFetch(`${this.baseUrl}/cards/${id}/likes`, {
                 headers: this.headers,
                 method: "PUT",
             });
@@ -70,7 +70,7 @@ class Api {
     }
 }
 const api = new Api({
-    baseUrl: "https://api.amitgit217.students.nomoredomainssbs.ru",
+    baseUrl: "https://api.amit217.students.nomoredomainssbs.ru",
     headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("token")}`,

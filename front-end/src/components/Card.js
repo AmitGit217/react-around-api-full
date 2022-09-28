@@ -24,7 +24,8 @@ export default function Card({
     const isOwn = card.owner === currentUser._id;
 
     const showRemoveButton = isOwn ? true : `card__removeButton_hidden`;
-    const isLiked = card.likes.some((user) => user._id === currentUser._id);
+    const isLiked = card.likes.some((id) => id === currentUser._id);
+
     const showLike = isLiked ? `card__like-button_active ` : false;
     return (
         <div className='card' key={card._id}>

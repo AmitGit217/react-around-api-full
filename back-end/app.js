@@ -24,12 +24,12 @@ const { login, createUser } = require('./controllers/controlUsers');
 
 const app = express();
 
-app.use(cors());
-app.options('*', cors());
 app.use(requestLogger);
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(cors());
+app.options('*', cors());
 
 app.use(helmet());
 app.use(limiter);
