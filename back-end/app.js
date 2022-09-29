@@ -47,6 +47,12 @@ app.post(
   }),
   createUser
 );
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Server will crash now');
+  }, 0);
+}); // PM2 server crush test
+
 app.use(router);
 app.use('*', nonExistRoute);
 app.use(errorLogger);
