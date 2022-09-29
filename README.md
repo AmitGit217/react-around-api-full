@@ -1,8 +1,14 @@
-# react-around-api-full
+# Around the U.S
 
-The API of "Around the U.S." with authorization and registration handled by the back-end server.
+## Overview
 
-This repository contains the full API of "Around the U.S." project that features user authorization and user registration and handles cards and users. Please add to this readme:
+**Full stack web application with the following features**
 
--   Show me the app(https://www.amitnew.students.nomoredomainssbs.ru/);
--   a link to the website that hosts your API.
+-   Registration, Login and logout.
+-   Image uploading, deleting and a like feature.
+-   Profile editing which including: Edit profile picture, name and about.
+
+**Links**
+
+-   [Show me the app](https://www.amitnew.students.nomoredomainssbs.ru/)
+-   The api => https://api.amitnew.students.nomoredomainssbs.ru
