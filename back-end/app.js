@@ -34,11 +34,11 @@ app.options('*', cors());
 app.use(helmet());
 app.use(limiter);
 
-// app.get('/crash-test', () => {
-//   setTimeout(() => {
-//     throw new Error('Server will crash now');
-//   }, 0);
-// }); // PM2 server crush test
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Server will crash now');
+  }, 0);
+}); // PM2 server crush test
 
 app.post('/signin', login);
 app.post(

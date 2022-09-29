@@ -160,7 +160,7 @@ function App() {
             .then((res) => {
                 if (res.token) {
                     localStorage.setItem("token", res.token);
-                    setEmail(email.email);
+                    setEmail(res.user.email);
                     setLoggedIn(true);
                     history.push("/");
                     setCurrentUser(res.user);
@@ -197,9 +197,9 @@ function App() {
             auth.checkToken(token)
                 .then((res) => {
                     if (res) {
-                        setEmail(res.user.email);
+                        setEmail(res.email);
                         setLoggedIn(true);
-                        setCurrentUser(res.user);
+                        setCurrentUser(res);
                         history.push("/");
                     }
                 })
