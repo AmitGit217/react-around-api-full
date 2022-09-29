@@ -16,7 +16,7 @@ const DATA_EXIST =
   'This data is already on our server, and user data should be unique';
 
 // Connections
-const MONGO_DB = 'mongodb://localhost:27017/aroundb';
+const MONGO_DB = 'mongodb://localhost:27017/around';
 
 module.exports = {
   NOT_FOUND,

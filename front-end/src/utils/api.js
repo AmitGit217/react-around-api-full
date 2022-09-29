@@ -70,7 +70,7 @@ class Api {
     }
 }
 const api = new Api({
-    baseUrl: "https://api.amit217.students.nomoredomainssbs.ru",
+    baseUrl: "https://api.amitnew.students.nomoredomainssbs.ru",
     headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("token")}`,
