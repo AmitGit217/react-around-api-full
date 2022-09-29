@@ -3,10 +3,13 @@ const {
   CREATE,
   CARD_NOT_FOUND_MESSAGE,
   INVALID_DATA_MESSAGE,
+  UNAUTHORIZE_MESSAGE,
+  UNAUTHORIZE,
 } = require('../lib/consts');
 
 const NotFound = require('../errors/NotFound');
 const ValidationError = require('../errors/Validation');
+const Unauthorize = require('../errors/Unauthorize');
 
 const getCards = (req, res, next) =>
   Card.find({})
@@ -25,10 +28,17 @@ const postCard = (req, res, next) => {
 };
 
 const deleteCardById = (req, res, next) => {
-  const { _id } = req.params;
-  Card.findByIdAndRemove(_id)
+  const cardId = req.params._id;
+  const userId = req.user._id;
+  Card.findById(cardId)
     .orFail()
-    .then((card) => res.send(card))
+    .then((card) => {
+      const { owner } = card;
+      if (owner != userId) {
+        return res.status(UNAUTHORIZE).send({ message: UNAUTHORIZE_MESSAGE });
+      }
+      return Card.findByIdAndRemove(cardId).then(() => res.send(card));
+    })
     .catch((err) => {
       if (err.name === 'DocumentNotFoundError') {
         throw new NotFound(CARD_NOT_FOUND_MESSAGE);

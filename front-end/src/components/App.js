@@ -141,6 +141,7 @@ function App() {
     function handleRegister(email, password) {
         auth.registerUser(email, password)
             .then((res) => {
+                console.log(res);
                 if (res) {
                     setImage(success);
                     setRegisterPopup(true);
