@@ -18,9 +18,11 @@
 **Directories & Files**
 
 -   `app.js` main server configuration.
+-   `errors` class objects for centralized error handling
+-   `helpers` non-feature functions or libraries such as `limiter` for limiting user requests.
 -   `routes` main routing logic with integration of `celebrate` & `Joi` libraries for data validation.
 -   `controllers` main in-route logic with the best practice of centralized error handling and promises based db-server communication.
--   `middlewares` server actions before/after a selected event acquire on the server such as `auth` for protecting routes and setting for the next operation the current user whom sending the request.
+-   `middlewares` server actions before/after a selected event has happened on the server such as `auth` for protecting routes and setting for the next operation the current user whom sending the request.
 
 **Links**
 
