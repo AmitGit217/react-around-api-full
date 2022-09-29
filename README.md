@@ -1,6 +1,6 @@
 # Around the U.S
 
-## Overview
+## Application overview
 
 **Full stack web application with the following features**
 
@@ -8,7 +8,14 @@
 -   Image uploading, deleting and a like feature.
 -   Profile editing which including: Edit profile picture, name and about.
 
+## Back-End overview
+
+**Used technologies**
+
+-   Node & Express.
+-   MongoDB & Mongoose.
+
 **Links**
 
 -   [Show me the app](https://www.amitnew.students.nomoredomainssbs.ru/)
--   The api => https://api.amitnew.students.nomoredomainssbs.ru
+-   API => https://api.amitnew.students.nomoredomainssbs.ru
