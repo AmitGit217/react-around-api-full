@@ -20,8 +20,7 @@
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
-        "predeploy": "npm run build",
-        "deploy": "npm run build && scp -r ./build/* amit217@amitgit217.students.nomoredomainssbs.ru:/home/amit222456a/github_amitgit217_react-around-api-full/front-end"
+        "deploy": "npm run build && scp -r -i ~/.ssh/id_ed25519  ./build/* amit222456a@34.125.3.129:/home/amit222456a/react-around-api-full/front-end"
     },
     "eslintConfig": {
         "extends": [

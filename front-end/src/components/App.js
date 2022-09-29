@@ -188,7 +188,7 @@ function App() {
                 setCards(res);
             })
             .catch((err) => console.log(err));
-    }, []);
+    }, [isLoggedIn]);
 
     useEffect(() => {
         const token = localStorage.getItem("token");
