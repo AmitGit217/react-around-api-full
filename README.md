@@ -20,6 +20,7 @@
 -   `app.js` main server configuration.
 -   `routes` main routing logic with integration of `celebrate` & `Joi` libraries for data validation.
 -   `controllers` main in-route logic with the best practice of centralized error handling and promises based db-server communication.
+-   `middlewares` server actions before/after a selected event acquire on the server such as `auth` for protecting routes and setting for the next operation the current user whom sending the request.
 
 **Links**
 
