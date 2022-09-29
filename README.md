@@ -15,6 +15,10 @@
 -   Node & Express.
 -   MongoDB & Mongoose.
 
+**Directories & Files**
+
+-   `app.js` main server configuration.
+
 **Links**
 
 -   [Show me the app](https://www.amitnew.students.nomoredomainssbs.ru/)
