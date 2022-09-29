@@ -12,6 +12,8 @@ const CARD_NOT_FOUND_MESSAGE = 'Card with this ID has not been found';
 const INVALID_DATA_MESSAGE = 'Your input is not a valid data';
 const DEFAULT_ERROR_MESSAGE = 'Something went wrong with the server';
 const UNAUTHORIZE_MESSAGE = 'Authorization Required';
+const DATA_EXIST =
+  'This data is already on our server, and user data should be unique';
 
 // Connections
 const MONGO_DB = 'mongodb://localhost:27017/aroundb';
@@ -28,4 +30,5 @@ module.exports = {
   DEFAULT_ERROR_MESSAGE,
   UNAUTHORIZE,
   UNAUTHORIZE_MESSAGE,
+  DATA_EXIST,
 };

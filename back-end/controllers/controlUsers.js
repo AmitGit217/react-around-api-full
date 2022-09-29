@@ -8,6 +8,7 @@ const {
   CREATE,
   USER_NOT_FOUND_MESSAGE,
   INVALID_DATA_MESSAGE,
+  DATA_EXIST,
 } = require('../lib/consts');
 const NotFound = require('../errors/NotFound');
 const ValidationError = require('../errors/Validation');
@@ -46,6 +47,8 @@ const createUser = (req, res, next) => {
         .catch((err) => {
           if (err.name === 'ValidationError') {
             throw new ValidationError(INVALID_DATA_MESSAGE);
+          } else {
+            throw new ValidationError(DATA_EXIST);
           }
         })
     )
