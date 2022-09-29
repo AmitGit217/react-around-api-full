@@ -18,6 +18,8 @@
 **Directories & Files**
 
 -   `app.js` main server configuration.
+-   `routes` main routing logic with integration of `celebrate` & `Joi` libraries for data validation.
+-   `controllers` main in-route logic with the best practice of centralized error handling and promises based db-server communication.
 
 **Links**
 
