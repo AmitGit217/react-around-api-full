@@ -18,7 +18,8 @@
 **Directories & Files**
 
 -   `app.js` main server configuration.
--   `errors` class objects for centralized error handling
+-   `lib` constants and reusable variables.
+-   `errors` class objects for centralized error handling.
 -   `helpers` non-feature functions or libraries such as `limiter` for limiting user requests.
 -   `routes` main routing logic with integration of `celebrate` & `Joi` libraries for data validation.
 -   `controllers` main in-route logic with the best practice of centralized error handling and promises based db-server communication.
