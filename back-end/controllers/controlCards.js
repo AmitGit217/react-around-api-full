@@ -4,6 +4,7 @@ const {
   CARD_NOT_FOUND_MESSAGE,
   INVALID_DATA_MESSAGE,
   UNAUTHORIZE_MESSAGE,
+  UNAUTHORIZE_ACTION,
 } = require('../lib/consts');
 
 const NotFound = require('../errors/NotFound');
@@ -33,7 +34,9 @@ const deleteCardById = (req, res, next) => {
     .then((card) => {
       const { owner } = card;
       if (owner != user) {
-        return res.status(403).send({ message: UNAUTHORIZE_MESSAGE });
+        return res
+          .status(UNAUTHORIZE_ACTION)
+          .send({ message: UNAUTHORIZE_MESSAGE });
       }
       return Card.findByIdAndRemove(cardId).then(() => res.send(card));
     })

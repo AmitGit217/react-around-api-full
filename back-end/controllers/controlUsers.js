@@ -13,6 +13,7 @@ const {
 const NotFound = require('../errors/NotFound');
 const ValidationError = require('../errors/Validation');
 const Unauthorize = require('../errors/Unauthorize');
+const DataExist = require('../errors/DataExist');
 
 const getUsers = (req, res, next) => {
   User.find({})
@@ -48,7 +49,7 @@ const createUser = (req, res, next) => {
           if (err.name === 'ValidationError') {
             throw new ValidationError(INVALID_DATA_MESSAGE);
           } else {
-            return res.status(409).send({ message: DATA_EXIST });
+            throw new DataExist(DATA_EXIST);
           }
         })
     )
