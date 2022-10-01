@@ -34,7 +34,7 @@ const deleteCardById = (req, res, next) => {
     .then((card) => {
       const { owner } = card;
       if (owner != user) {
-        return res.status(UNAUTHORIZE).send({ message: UNAUTHORIZE_MESSAGE });
+        return res.status(403).send({ message: UNAUTHORIZE_MESSAGE });
       }
       return Card.findByIdAndRemove(cardId).then(() => res.send(card));
     })

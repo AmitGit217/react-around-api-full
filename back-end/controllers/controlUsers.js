@@ -48,7 +48,7 @@ const createUser = (req, res, next) => {
           if (err.name === 'ValidationError') {
             throw new ValidationError(INVALID_DATA_MESSAGE);
           } else {
-            throw new ValidationError(DATA_EXIST);
+            return res.status(409).send({ message: DATA_EXIST });
           }
         })
     )
