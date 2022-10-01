@@ -4,7 +4,6 @@ const {
   CARD_NOT_FOUND_MESSAGE,
   INVALID_DATA_MESSAGE,
   UNAUTHORIZE_MESSAGE,
-  UNAUTHORIZE,
 } = require('../lib/consts');
 
 const NotFound = require('../errors/NotFound');
