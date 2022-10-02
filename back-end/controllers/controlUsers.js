@@ -44,7 +44,10 @@ const createUser = (req, res, next) => {
         ...req.body,
         password: hash,
       })
-        .then((user) => res.status(CREATE).send(user))
+        .then((user) => {
+          const { password, ...rest } = user._doc;
+          res.status(CREATE).send(rest);
+        })
         .catch((err) => {
           if (err.name === 'ValidationError') {
             throw new ValidationError(INVALID_DATA_MESSAGE);

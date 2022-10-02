@@ -5,10 +5,8 @@ const auth = require('../middlewares/auth');
 const {
   getUsers,
   getUserById,
-  createUser,
   updateUser,
   updateAvatar,
-  login,
   getCurrentUser,
 } = require('../controllers/controlUsers');
 const {
@@ -18,21 +16,6 @@ const {
   likeCard,
   disLikeCard,
 } = require('../controllers/controlCards');
-
-router.post('/signin', login);
-router.post(
-  '/signup',
-  celebrate({
-    body: Joi.object().keys({
-      name: Joi.string().min(2).max(30),
-      about: Joi.string().min(2).max(30),
-      avatar: Joi.string().uri(),
-      email: Joi.string().required().email(),
-      password: Joi.string().required(),
-    }),
-  }),
-  createUser
-);
 
 router.get('/users', auth, getUsers);
 router.patch('/users/me', auth, updateUser);
