@@ -44,9 +44,9 @@ const createUser = (req, res, next) => {
         ...req.body,
         password: hash,
       })
-        .then((user) => {
-          const { password, ...rest } = user._doc;
-          res.status(CREATE).send(rest);
+        .then((data) => {
+          const { password, ...user } = data._doc;
+          res.status(CREATE).send(user);
         })
         .catch((err) => {
           if (err.name === 'ValidationError') {
@@ -104,11 +104,12 @@ const updateAvatar = (req, res, next) => {
 const login = (req, res, next) => {
   const { password, email } = req.body;
   User.findUserByCredentials(email, password)
-    .then((user) => {
+    .then((data) => {
       const token = jwt.sign(
-        { _id: user._id },
+        { _id: data._id },
         NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret'
       );
+      const { password, ...user } = data._doc;
       res.send({ token, user });
     })
     .catch((err) => {
