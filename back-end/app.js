@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const { errors } = require('celebrate');
 require('dotenv').config();
-const { celebrate, Joi } = require('celebrate');
 
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
@@ -21,6 +20,8 @@ const errorHandler = require('./helpers/errorHandler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const { login, createUser } = require('./controllers/controlUsers');
+const { celebrateUser } = require('./helpers/celebrate');
+const auth = require('./middlewares/auth');
 
 const app = express();
 
@@ -30,7 +31,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
 app.options('*', cors());
-
 app.use(helmet());
 app.use(limiter);
 
@@ -41,20 +41,8 @@ app.get('/crash-test', () => {
 }); // PM2 server crush test
 
 app.post('/signin', login);
-app.post(
-  '/signup',
-  celebrate({
-    body: Joi.object().keys({
-      name: Joi.string().min(2).max(30),
-      about: Joi.string().min(2).max(30),
-      avatar: Joi.string().uri(),
-      email: Joi.string().required().email(),
-      password: Joi.string().required(),
-    }),
-  }),
-  createUser
-);
-
+app.post('/signup', celebrateUser, createUser);
+app.use(auth);
 app.use(router);
 app.use('*', nonExistRoute);
 app.use(errorLogger);
