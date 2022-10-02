@@ -42,6 +42,7 @@ app.get('/crash-test', () => {
 
 app.post('/signin', login);
 app.post('/signup', celebrateUser, createUser);
+
 app.use(auth);
 app.use(router);
 app.use('*', nonExistRoute);

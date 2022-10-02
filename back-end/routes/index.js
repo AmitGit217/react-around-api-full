@@ -15,15 +15,14 @@ const {
   disLikeCard,
 } = require('../controllers/controlCards');
 const {
-  celebrateUser,
   celebrateCard,
   celebrateUserName,
   celebrateUserAvatar,
 } = require('../helpers/celebrate');
 
-router.get('/users', getUsers);
-router.get('/users/:_id', getUserById);
 router.get('/users/me', getCurrentUser);
+router.get('/users/:_id', getUserById);
+router.get('/users', getUsers);
 router.patch('/users/me', celebrateUserName, updateUser);
 router.patch('/users/me/avatar', celebrateUserAvatar, updateAvatar);
 
