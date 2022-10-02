@@ -36,6 +36,7 @@
     "express-winston": "^4.2.0",
     "helmet": "^5.1.1",
     "joi": "^17.6.1",
+    "joi-objectid": "^4.0.2",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^4.10.0",
     "mongoose": "^6.5.3",

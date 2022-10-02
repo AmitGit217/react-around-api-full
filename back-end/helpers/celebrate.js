@@ -1,4 +1,4 @@
-const { celebrate, Joi } = require('celebrate');
+const { celebrate, Joi, Segments } = require('celebrate');
 
 const celebrateUser = celebrate({
   body: Joi.object().keys({
@@ -14,6 +14,12 @@ const celebrateUserName = celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30),
     about: Joi.string().min(2).max(30),
+  }),
+});
+
+const celebrateId = celebrate({
+  [Segments.PARAMS]: Joi.object().keys({
+    _id: Joi.string().hex().length(24),
   }),
 });
 
@@ -38,4 +44,5 @@ module.exports = {
   celebrateCard,
   celebrateUserName,
   celebrateUserAvatar,
+  celebrateId,
 };

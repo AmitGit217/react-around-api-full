@@ -18,18 +18,19 @@ const {
   celebrateCard,
   celebrateUserName,
   celebrateUserAvatar,
+  celebrateId,
 } = require('../helpers/celebrate');
 
 router.get('/users/me', getCurrentUser);
-router.get('/users/:_id', getUserById);
+router.get('/users/:_id', celebrateId, getUserById);
 router.get('/users', getUsers);
 router.patch('/users/me', celebrateUserName, updateUser);
 router.patch('/users/me/avatar', celebrateUserAvatar, updateAvatar);
 
 router.get('/cards', getCards);
 router.post('/cards', celebrateCard, postCard);
-router.put('/cards/:_id/likes', likeCard);
-router.delete('/cards/:_id', deleteCardById);
-router.delete('/cards/:_id/likes', disLikeCard);
+router.put('/cards/:_id/likes', celebrateId, likeCard);
+router.delete('/cards/:_id', celebrateId, deleteCardById);
+router.delete('/cards/:_id/likes', celebrateId, disLikeCard);
 
 module.exports = router;
