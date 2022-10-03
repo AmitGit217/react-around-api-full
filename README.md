@@ -17,8 +17,10 @@
 
 **Directories & Files**
 
+-   `logs` request and error logs.
 -   `app.js` main server configuration.
 -   `lib` constants and reusable variables.
+-   `models` mongoose schemas and validations.
 -   `errors` class objects for centralized error handling.
 -   `helpers` non-feature functions or libraries such as `limiter` for limiting user requests.
 -   `routes` main routing logic with integration of `celebrate` & `Joi` libraries for data validation.
