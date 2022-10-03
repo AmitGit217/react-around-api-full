@@ -54,7 +54,7 @@ Third party libraries: cors, limiter, helmet, jwt, celebrate, and joi.
 -   Back-end: While we are in the remote server, pulling the repository from the main branch and restarting the PM2 engine.
 -   Front-End: Building the app locally using `npm run build` and then copy the files to our remote server via SSH connection.
 
-**Implementations**
+## Implementations
 
 -   ES6 JavaScript syntax.
 -   REST api implementation.
