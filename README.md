@@ -43,6 +43,8 @@ Third party libraries: cors, limiter, helmet, jwt, celebrate, and joi.
 -   `contexts` global state variables for handling a context data fetched from an API.
 -   `utils` reusable functions and classes for mainly implementing authorization, API requests and simple error handling.
 
+Third party libraries: Formik and Yup.
+
 ## Cloud overview
 
 **Used technologies**
