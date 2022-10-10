@@ -13,18 +13,18 @@ afterAll((done) => {
 });
 
 describe('User', () => {
-  it('Should return 201 status code', async () => {
-    const res = await request
-      .post('/signup')
-      .send({ email: 'valid@email.com', password: 'password' });
+  const user = { email: 'valid@email.com', password: 'password' };
+  it('Should return 201 status code for /signup', async () => {
+    const res = await request.post('/signup').send(user);
     expect(res.status).toBe(201);
+    expect(res.body.email).toBe(user.email);
     return res;
   });
-  it('Should return 200 status code', async () => {
-    const res = await request
-      .post('/signin')
-      .send({ email: 'valid@email.com', password: 'password' });
+  it('Should return 200 status code for /signin', async () => {
+    const res = await request.post('/signin').send(user);
     expect(res.status).toBe(200);
+    expect(res.body.user.email).toBe(user.email);
+    expect(res.body.token).toBeDefined();
     return res;
   });
 });
