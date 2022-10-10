@@ -18,6 +18,7 @@ const DATA_EXIST =
 
 // Connections
 const MONGO_DB = 'mongodb://localhost:27017/around';
+const MONGO_DB_TEST = 'mongodb://localhost:27017/test';
 
 module.exports = {
   NOT_FOUND,
@@ -33,4 +34,5 @@ module.exports = {
   UNAUTHORIZE,
   UNAUTHORIZE_MESSAGE,
   DATA_EXIST,
+  MONGO_DB_TEST,
 };

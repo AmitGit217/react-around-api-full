@@ -10,9 +10,13 @@ const limiter = require('./helpers/limit');
 
 const { PORT = 3000 } = process.env;
 
-const { MONGO_DB } = require('./lib/consts');
+const { MONGO_DB, MONGO_DB_TEST } = require('./lib/consts');
 
-mongoose.connect(MONGO_DB);
+if (process.env.NODE_ENV !== 'test') {
+  mongoose.connect(MONGO_DB);
+} else {
+  mongoose.connect(MONGO_DB_TEST);
+}
 
 const router = require('./routes/index');
 const nonExistRoute = require('./routes/nonExistRoute');
@@ -34,12 +38,6 @@ app.options('*', cors());
 app.use(helmet());
 app.use(limiter);
 
-app.get('/crash-test', () => {
-  setTimeout(() => {
-    throw new Error('Server will crash now');
-  }, 0);
-}); // PM2 server crush test
-
 app.post('/signin', login);
 app.post('/signup', celebrateUser, createUser);
 
@@ -50,4 +48,10 @@ app.use(errorLogger);
 app.use(errors());
 app.use(errorHandler);
 
-app.listen(PORT);
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(PORT, () => {
+    console.log(`App listening on port ${PORT}`);
+  });
+}
+
+module.exports = app;
