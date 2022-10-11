@@ -81,6 +81,7 @@ describe('User', () => {
   });
 });
 
+let cardId;
 describe('Card', () => {
   const card = { name: 'card', link: 'http://card.com' };
   it('Should return 201 status code with a new card response for /cards', async () => {
@@ -91,6 +92,7 @@ describe('Card', () => {
     expect(res.status).toBe(201);
     expect(res.body.name).toBe(card.name);
     expect(res.body.link).toBe(card.link);
+    cardId = res.body._id;
   });
   it('Should return 200 status code with all the cards for /cards', async () => {
     const res = await request
@@ -98,5 +100,27 @@ describe('Card', () => {
       .set('Authorization', 'Bearer ' + token);
     expect(res.status).toBe(200);
     expect(res.body).toHaveLength(1);
+  });
+  it('Should return 200 status code with updated likes array for /cards/:_id/likes', async () => {
+    const res = await request
+      .put(`/cards/${cardId}/likes`)
+      .set('Authorization', 'Bearer ' + token);
+    expect(res.status).toBe(200);
+    expect(res.body.likes).toHaveLength(1);
+  });
+  it('Should return 200 status code with deleted card for /cards/:_id', async () => {
+    const res = await request
+      .delete(`/cards/${cardId}`)
+      .set('Authorization', 'Bearer ' + token);
+    expect(res.status).toBe(200);
+    expect(res.body.name).toBe(card.name);
+    expect(res.body.link).toBe(card.link);
+  });
+  it('Should return 200 status code with empty array for /cards', async () => {
+    const res = await request
+      .get('/cards')
+      .set('Authorization', 'Bearer ' + token);
+    expect(res.status).toBe(200);
+    expect(res.body).toHaveLength(0);
   });
 });
