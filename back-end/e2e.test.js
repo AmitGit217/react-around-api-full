@@ -84,6 +84,10 @@ describe('User', () => {
 let cardId;
 describe('Card', () => {
   const card = { name: 'card', link: 'http://card.com' };
+  it('Should return 401 status for /cards', async () => {
+    const res = await request.get('/cards');
+    expect(res.status).toBe(401);
+  });
   it('Should return 201 status code with a new card response for /cards', async () => {
     const res = await request
       .post('/cards')
