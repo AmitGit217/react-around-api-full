@@ -108,6 +108,13 @@ describe('Card', () => {
     expect(res.status).toBe(200);
     expect(res.body.likes).toHaveLength(1);
   });
+  it('Should return 200 status code with empty likes array for /cards/:_id/likes', async () => {
+    const res = await request
+      .delete(`/cards/${cardId}/likes`)
+      .set('Authorization', 'Bearer ' + token);
+    expect(res.status).toBe(200);
+    expect(res.body.likes).toHaveLength(0);
+  });
   it('Should return 200 status code with deleted card for /cards/:_id', async () => {
     const res = await request
       .delete(`/cards/${cardId}`)
