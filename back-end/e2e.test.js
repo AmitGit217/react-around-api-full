@@ -13,6 +13,8 @@ afterAll((done) => {
 });
 
 describe('User', () => {
+  let token;
+  let id;
   const user = { email: 'valid@email.com', password: 'password' };
   it('Should return 201 status code for /signup', async () => {
     const res = await request.post('/signup').send(user);
@@ -20,11 +22,18 @@ describe('User', () => {
     expect(res.body.email).toBe(user.email);
     return res;
   });
+  it('Should return 400 status code for /signup', async () => {
+    const res = await request.post('/signup').send(user.password);
+    expect(res.status).toBe(400);
+    return res;
+  });
   it('Should return 200 status code for /signin', async () => {
     const res = await request.post('/signin').send(user);
     expect(res.status).toBe(200);
     expect(res.body.user.email).toBe(user.email);
     expect(res.body.token).toBeDefined();
+    token = res.body.token;
+    id = res.body.user._id;
     return res;
   });
 });
