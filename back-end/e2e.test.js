@@ -3,13 +3,9 @@ const app = require('./app.js');
 const request = supertest(app);
 const mongoose = require('mongoose');
 
-beforeAll(() => {
-  mongoose.connection.dropDatabase();
-});
-
 afterAll((done) => {
-  mongoose.connection.close();
   mongoose.connection.dropDatabase();
+  mongoose.connection.close();
   done();
 });
 
@@ -18,6 +14,11 @@ let id;
 describe('User', () => {
   const user = { email: 'valid@email.com', password: 'password' };
   const newUser = { name: 'new', about: 'new' };
+  const newAvatar = { avatar: 'http://avatar.com' };
+  it('Should return 401 status for /users', async () => {
+    const res = await request.get('/users');
+    expect(res.status).toBe(401);
+  });
   it('Should return 201 status code for /signup', async () => {
     const res = await request.post('/signup').send(user);
     expect(res.status).toBe(201);
@@ -57,15 +58,45 @@ describe('User', () => {
       .set('Authorization', 'Bearer ' + token)
       .send(newUser);
     expect(res.status).toBe(200);
-    expect(res.body.name).toBe('new');
-    expect(res.body.about).toBe('new');
+    expect(res.body.name).toBe(newUser.name);
+    expect(res.body.about).toBe(newUser.about);
   });
   it('Should return 200 status code with current user by JWT for /users/me', async () => {
     const res = await request
       .get(`/users/me`)
       .set('Authorization', 'Bearer ' + token);
     expect(res.status).toBe(200);
-    expect(res.body.name).toBe('new');
-    expect(res.body.about).toBe('new');
+    expect(res.body.name).toBe(newUser.name);
+    expect(res.body.about).toBe(newUser.about);
+  });
+  it('Should return 200 status code with updated avatar for /users/me/avatar', async () => {
+    const res = await request
+      .patch('/users/me/avatar')
+      .set('Authorization', 'Bearer ' + token)
+      .send(newAvatar);
+    expect(res.status).toBe(200);
+    expect(res.body.name).toBe(newUser.name);
+    expect(res.body.about).toBe(newUser.about);
+    expect(res.body.avatar).toBe(newAvatar.avatar);
+  });
+});
+
+describe('Card', () => {
+  const card = { name: 'card', link: 'http://card.com' };
+  it('Should return 201 status code with a new card response for /cards', async () => {
+    const res = await request
+      .post('/cards')
+      .set('Authorization', 'Bearer ' + token)
+      .send(card);
+    expect(res.status).toBe(201);
+    expect(res.body.name).toBe(card.name);
+    expect(res.body.link).toBe(card.link);
+  });
+  it('Should return 200 status code with all the cards for /cards', async () => {
+    const res = await request
+      .get('/cards')
+      .set('Authorization', 'Bearer ' + token);
+    expect(res.status).toBe(200);
+    expect(res.body).toHaveLength(1);
   });
 });
