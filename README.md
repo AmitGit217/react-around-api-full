@@ -59,6 +59,7 @@ Third party libraries: Formik and Yup.
 ## Implementations
 
 -   ES6 JavaScript syntax.
+-   Test-Driven-Development.
 -   REST api implementation.
 -   Asynchronous programming.
 -   OOP & Component-Oriented-Programming.
